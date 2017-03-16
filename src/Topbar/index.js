@@ -72,6 +72,7 @@ class Topbar extends React.Component {
   componentDidMount() {
     if (!this.props.preview) {
       this.loadInterval = setInterval(this.setTime.bind(this), 1000);
+    } else {
       document.body.style.paddingTop = '50px';
     }
   }
