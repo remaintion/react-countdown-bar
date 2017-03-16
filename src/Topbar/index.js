@@ -8,6 +8,7 @@ const styles = {
     justifyContent: 'space-between',
     padding: '0px 30px',
     alignItems: 'center',
+    zIndex: 10000000000
   },
   text: {
     color: '#fff',
