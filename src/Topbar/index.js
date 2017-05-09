@@ -82,11 +82,11 @@ class Topbar extends React.Component {
   }
   setTime() {
     if (this.isMount) {
-      const isShow = moment().isBefore(moment(this.props.liveAt));
-      const days = moment(this.props.liveAt).diff(moment(), 'days');
-      const hours = moment(moment(this.props.liveAt).diff(moment())).format('HH');
-      const minutes = moment(moment(this.props.liveAt).diff(moment())).format('mm');
-      const seconds = moment(moment(this.props.liveAt).diff(moment())).format('ss');
+      const isShow = moment().utc().isBefore(moment(this.props.liveAt));
+      const days = moment(this.props.liveAt).utc().diff(moment().utc(), 'days');
+      const hours = moment(moment(this.props.liveAt).utc().diff(moment().utc())).format('HH');
+      const minutes = moment(moment(this.props.liveAt).utc().diff(moment().utc())).format('mm');
+      const seconds = moment(moment(this.props.liveAt).utc().diff(moment().utc())).format('ss');
       this.setState({ days, hours, minutes, seconds, isShow });
     }
   }
@@ -101,7 +101,7 @@ class Topbar extends React.Component {
       style.right = 0;
       style.position = 'fixed';
       style.fontWeight = 600;
-      if (!moment().isBefore(moment(this.props.liveAt))) {
+      if (moment().utc().isAfter(moment(this.props.liveAt).utc())) {
         return <div></div>;
       }
     }
