@@ -86,7 +86,7 @@ class Topbar extends React.Component {
 
       const diff = moment(this.props.liveAt).diff(moment(), 's')
       const d = moment.duration(diff, 'seconds')
-      const days = d.days()
+      const days = d.days().toString().length !== 1 ? d.days() : `0${d.days()}`
       const hours = d.hours().toString().length !== 1 ? d.hours() : `0${d.hours()}`
       const minutes = d.minutes().toString().length !== 1 ? d.minutes() : `0${d.minutes()}`
       const seconds = d.seconds().toString().length !== 1 ? d.seconds() : `0${d.seconds()}`
