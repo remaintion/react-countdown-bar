@@ -83,10 +83,13 @@ class Topbar extends React.Component {
   setTime() {
     if (this.isMount) {
       const isShow = moment().utc().isBefore(moment(this.props.liveAt));
-      const days = moment(this.props.liveAt).utc().diff(moment().utc(), 'days');
-      const hours = moment(moment(this.props.liveAt).utc().diff(moment().utc())).format('HH');
-      const minutes = moment(moment(this.props.liveAt).utc().diff(moment().utc())).format('mm');
-      const seconds = moment(moment(this.props.liveAt).utc().diff(moment().utc())).format('ss');
+
+      const diff = moment(this.props.liveAt).diff(moment(), 's')
+      const d = moment.duration(diff, 'seconds')
+      const days = d.days()
+      const hours = d.hours().toString().length !== 1 ? d.hours() : `0${d.hours()}`
+      const minutes = d.minutes().toString().length !== 1 ? d.minutes() : `0${d.minutes()}`
+      const seconds = d.seconds().toString().length !== 1 ? d.seconds() : `0${d.seconds()}`
       this.setState({ days, hours, minutes, seconds, isShow });
     }
   }
@@ -103,29 +106,29 @@ class Topbar extends React.Component {
       style.fontWeight = 600;
       if (moment().utc().isAfter(moment(this.props.liveAt).utc())) {
         return <div></div>;
+        }
       }
-    }
-    return (
-      <div style={style}>
-        <div style={styles.text}>{this.props.text}</div>
-        <div style={styles.unitContainer}>
-          <Unit text={this.state.days} unit="DAYS" />
-          <Separator />
-          <Unit text={this.state.hours} unit="HOURS" />
-          <Separator />
-          <Unit text={this.state.minutes} unit="MINUTES" />
-          <Separator />
-          <Unit text={this.state.seconds} unit="SECONDS" />
+      return (
+        <div style={style}>
+          <div style={styles.text}>{this.props.text}</div>
+          <div style={styles.unitContainer}>
+            <Unit text={this.state.days} unit="DAYS" />
+            <Separator />
+            <Unit text={this.state.hours} unit="HOURS" />
+            <Separator />
+            <Unit text={this.state.minutes} unit="MINUTES" />
+            <Separator />
+            <Unit text={this.state.seconds} unit="SECONDS" />
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
-}
-Topbar.propTypes = {
-  text: PropTypes.string,
-  color: PropTypes.string,
-  liveAt: PropTypes.string,
-  preview: PropTypes.bool,
-};
+  Topbar.propTypes = {
+    text: PropTypes.string,
+    color: PropTypes.string,
+    liveAt: PropTypes.string,
+    preview: PropTypes.bool,
+  };
 
-export default Topbar;
+  export default Topbar;
